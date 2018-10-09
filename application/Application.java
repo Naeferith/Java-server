@@ -5,30 +5,32 @@ import java.net.*;
 /**
  * détermine l'adresse IP de la machine locale et l'affiche sur la console
  * */
-public class Application
-{
-public static int conversionSansSigne(byte b)	 { return b>=0? b: b+256;}
+public class Application {
 
-public static void main(String[] args)throws Exception
-{
-InetAddress ici;
+    public static void main(String[] args)throws Exception {
+        //Initialisation du serveur et ses coodrdonnées locales (adresse/port)
+        ServerSocket server = new ServerSocket(9003);
+        InetAddress serverIP = InetAddress.getLocalHost();
+        int localPort = server.getLocalPort();
+        
+        System.out.println("Server is set up at ["+serverIP.getHostAddress()+":"+localPort+"]");
 
-try{ici = InetAddress.getLocalHost();} //appel au serveur de noms local
-catch(Exception e){throw new Exception("appel à getLocalHost a echoué");}
-String sIP, sNom;
-byte []b;
-int i0, i1, i2, i3;
+        ThreadGroup group = new ThreadGroup("clientSockets");
+        int noConnexion = 0;
+        
+        while(true) { //attente infinie du serveur sur le port
+            Socket nouveauClientSocket;
+            ClientSession nouveauClientThread;
 
-sIP = ici.getHostAddress();
-sNom = ici.getHostName();
-b = ici.getAddress(); // récupère le tableau des 4 octets définissant l'adresse IP
-i0 = conversionSansSigne(b[0]);
-i1 = conversionSansSigne(b[1]);
-i2 = conversionSansSigne(b[2]);
-i3 = conversionSansSigne(b[3]);
+            nouveauClientSocket = server.accept(); // attente de connexion de la part d'un nouveau client
+            ++noConnexion; // la connexion a eu lieu et un socket a été créé : nouveauClientSocket
+            System.out.println("Connexion réussie n° : "+noConnexion);
 
-System.out.println("n° IP de cette machine : "+ sIP);
-System.out.println("nom DNS de cette machine : "+ sNom);
-System.out.println("n° IP de cette machine : "+ i0+"."+i1+"."+i2+"."+i3);
-}
+            /* à présent création d'un thread pour gérer les transactions avec le nouvau client en parallèle 
+             * avec les autres clients déjà connectés et avec l'attente perpétuelle du servur*/
+
+            nouveauClientThread = new ClientSession(nouveauClientSocket, group, noConnexion); 
+            nouveauClientThread.start();
+            }
+    }
 }
