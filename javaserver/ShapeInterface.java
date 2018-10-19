@@ -5,6 +5,8 @@
  */
 package javaserver;
 
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import org.w3c.dom.*;
 
@@ -21,19 +23,34 @@ public class ShapeInterface extends DrawableInterface {
     @Override
     public void executeRequest() {
         System.out.println("Ceci est une forme");
+
+        //Structure a dessiner
+        Polygon polygon = new Polygon();
         
-        final Element racine = DrawableInterface.doc.getDocumentElement();
-        final NodeList racineNoeuds = racine.getChildNodes();
+        //Couleur
+        polygon.setFill(new Color(
+                Double.parseDouble(DrawableInterface.doc.getElementsByTagName("r").item(0).getTextContent()), 
+                Double.parseDouble(DrawableInterface.doc.getElementsByTagName("g").item(0).getTextContent()), 
+                Double.parseDouble(DrawableInterface.doc.getElementsByTagName("b").item(0).getTextContent()), 
+                1));
         
-        for (int i = 0; i<racineNoeuds.getLength(); i++) {
-            if(racineNoeuds.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                final Node personne = racineNoeuds.item(i);
-                System.out.println(personne.getNodeName());
+        //Points
+        final Node verticeNode = DrawableInterface.doc.getElementsByTagName("vertices").item(0);
+        final NodeList vertices = verticeNode.getChildNodes();
+        
+        for (int i = 0; i<vertices.getLength(); i++) {
+            if(vertices.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                final Element e = (Element) vertices.item(i);
+                polygon.getPoints().add(new Double(e.getElementsByTagName("x").item(0).getTextContent()));
+                polygon.getPoints().add(new Double(e.getElementsByTagName("y").item(0).getTextContent()));
             }				
         }
-
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                JavaServer.Root.getChildren().add(polygon);
+            }
+        });
         
-        Polygon polygon = new Polygon();
     }
 
     @Override

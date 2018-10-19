@@ -21,6 +21,7 @@ import javafx.stage.Stage;
  * @author Thomas
  */
 public class JavaServer extends Application {
+    public static volatile Group Root = null;
     
     @Override
     public void start(Stage primaryStage) {
@@ -34,7 +35,7 @@ public class JavaServer extends Application {
             }
         });
         
-        StackPane root = new StackPane();
+        Group root = new Group();
         root.getChildren().add(btn);
         
         //Creating a Polygon 
@@ -51,7 +52,9 @@ public class JavaServer extends Application {
         //Creating a Group object  
         Group root2 = new Group(polygon); 
         
-        Scene scene = new Scene(root2, 600, 300);
+        Scene scene = new Scene(root, 600, 300);
+        
+        Root = root;
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
