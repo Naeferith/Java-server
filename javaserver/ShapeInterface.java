@@ -5,9 +5,12 @@
  */
 package javaserver;
 
+import graphic.GraphicShape;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
+import network.ClientSession;
 import org.w3c.dom.*;
 
 /**
@@ -21,11 +24,12 @@ public class ShapeInterface extends DrawableInterface {
     }
     
     @Override
-    public void executeRequest() {
+    public void executeRequest(ClientSession cs) {
         System.out.println("Ceci est une forme");
-
         //Structure a dessiner
-        Polygon polygon = new Polygon();
+        String id = DrawableInterface.doc.getDocumentElement().getAttribute("id");
+        GraphicShape polygon = cs.initShape(id);
+        boolean isUpdate = !polygon.getPoints().isEmpty();
         
         //Couleur
         polygon.setFill(new Color(
@@ -38,6 +42,9 @@ public class ShapeInterface extends DrawableInterface {
         final Node verticeNode = DrawableInterface.doc.getElementsByTagName("vertices").item(0);
         final NodeList vertices = verticeNode.getChildNodes();
         
+        //Si des points ont déja été définis, c'est un update -> on reset les points.
+        if (!polygon.getPoints().isEmpty()) polygon.getPoints().clear();
+        
         for (int i = 0; i<vertices.getLength(); i++) {
             if(vertices.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 final Element e = (Element) vertices.item(i);
@@ -47,7 +54,7 @@ public class ShapeInterface extends DrawableInterface {
         }
         Platform.runLater(new Runnable() {
             @Override public void run() {
-                JavaServer.Root.getChildren().add(polygon);
+                if (!isUpdate) cs.getGroup().getChildren().add(polygon);
             }
         });
         

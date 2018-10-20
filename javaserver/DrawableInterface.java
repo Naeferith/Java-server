@@ -18,6 +18,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import network.ClientSession;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -47,7 +48,7 @@ public abstract class DrawableInterface {
         return next;
     }
     
-    public abstract void executeRequest();
+    public abstract void executeRequest(ClientSession cs);
     public abstract String getDescription();
     
     public boolean canInterpret(String choix) {
@@ -68,7 +69,7 @@ public abstract class DrawableInterface {
         return true;
     }
     
-    public void interpretXML(String ligne) {
+    public void interpretXML(String ligne, ClientSession cs) {
         //Interpretation de l'xml recu
         factory = DocumentBuilderFactory.newInstance();
         xmlStringBuilder = new StringBuilder();
@@ -84,12 +85,12 @@ public abstract class DrawableInterface {
         catch(SAXException saxe) { System.out.println("Erreur : XML corrompu"); }
         catch(IOException ioe) { System.out.println("ioe"); }
         catch(ParserConfigurationException pce) { System.out.println("pce"); }
-        if (validateXMLSchema(doc.getDocumentElement().getTagName(), ligne)) interact(doc.getDocumentElement().getTagName());
+        if (validateXMLSchema(doc.getDocumentElement().getTagName(), ligne)) interact(doc.getDocumentElement().getTagName(), cs);
         else System.out.println("XML recu n'est pas validé par l'XSD correspondant");
     }
     
-    public void interact(String choix) {
-        if (this.canInterpret(choix)) this.executeRequest();
-        else if (this.next != null) this.next.interact(choix);
+    public void interact(String choix, ClientSession cs) {
+        if (this.canInterpret(choix)) executeRequest(cs);
+        else if (this.next != null) this.next.interact(choix, cs);
     }
 }

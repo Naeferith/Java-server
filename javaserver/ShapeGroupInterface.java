@@ -5,6 +5,8 @@
  */
 package javaserver;
 
+import network.ClientSession;
+
 /**
  *
  * @author Thomas
@@ -16,7 +18,7 @@ public class ShapeGroupInterface extends DrawableInterface {
     }
     
     @Override
-    public void executeRequest() {
+    public void executeRequest(ClientSession cs) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
