@@ -32,11 +32,15 @@ public class ShapeInterface extends DrawableInterface {
         boolean isUpdate = !polygon.getPoints().isEmpty();
         
         //Couleur
-        polygon.setFill(new Color(
-                Double.parseDouble(DrawableInterface.doc.getElementsByTagName("r").item(0).getTextContent()), 
+        Color color = new Color( Double.parseDouble(DrawableInterface.doc.getElementsByTagName("r").item(0).getTextContent()), 
                 Double.parseDouble(DrawableInterface.doc.getElementsByTagName("g").item(0).getTextContent()), 
                 Double.parseDouble(DrawableInterface.doc.getElementsByTagName("b").item(0).getTextContent()), 
-                1));
+                1);
+        
+        polygon.setFill(color);
+        polygon.setStroke(color);
+        if (polygon.getPoints().size() < 3) polygon.setStrokeWidth(1); //Si c'est un segment, on affiche le bord
+        else polygon.setStrokeWidth(0);
         
         //Points
         final Node verticeNode = DrawableInterface.doc.getElementsByTagName("vertices").item(0);
