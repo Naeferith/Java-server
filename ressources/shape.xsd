@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 
 <schema xmlns="http://www.w3.org/2001/XMLSchema">
-	<element name="shape">
+  <element name="shape">
     <complexType>
       <sequence>
         <element name="color" minOccurs="1" maxOccurs="1"/>
-		<element name="vertices" minOccurs="1" maxOccurs="1"/>
+	<element name="vertices" minOccurs="1" maxOccurs="1"/>
       </sequence>
+      <attribute name="id" type="string" use="required"/>
     </complexType>
   </element>
   
@@ -15,7 +16,7 @@
       <sequence>
         <element name="r" type="positiveInteger" minOccurs="1" maxOccurs="1"/>
         <element name="g" type="positiveInteger" minOccurs="1" maxOccurs="1"/>
-		<element name="b" type="positiveInteger" minOccurs="1" maxOccurs="1"/>
+	<element name="b" type="positiveInteger" minOccurs="1" maxOccurs="1"/>
       </sequence>
     </complexType>
   </element>
