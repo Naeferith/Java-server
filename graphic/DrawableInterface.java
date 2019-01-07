@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaserver;
+package graphic;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import javafx.scene.paint.Color;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -92,5 +93,12 @@ public abstract class DrawableInterface {
     public void interact(String choix, ClientSession cs) {
         if (this.canInterpret(choix)) executeRequest(cs);
         else if (this.next != null) this.next.interact(choix, cs);
+    }
+    
+    protected Color retrieveColor() {
+        return new Color(   Double.parseDouble(doc.getElementsByTagName("r").item(0).getTextContent()), 
+                            Double.parseDouble(doc.getElementsByTagName("g").item(0).getTextContent()), 
+                            Double.parseDouble(doc.getElementsByTagName("b").item(0).getTextContent()), 
+                            1);
     }
 }

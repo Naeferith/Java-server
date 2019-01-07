@@ -1,6 +1,9 @@
 package network;
 
-import graphic.GraphicShape;
+import graphic.ShapeInterface;
+import graphic.CircleInterface;
+import graphic.ShapeGroupInterface;
+import graphic.DrawableInterface;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.shape.Shape;
 import javaserver.*;
 
 
@@ -60,11 +64,11 @@ public class ClientSession extends Thread {
         }
     }
     
-    public GraphicShape initShape(String id) {
+    public Object retrieveShape(String id) {
         for (javafx.scene.Node node : getAllNodes()) {
-            if (node != null && node instanceof GraphicShape && ((GraphicShape)node).getID().equals(id)) return (GraphicShape)node;
+            if (node != null && node.getId().equals(id)) return (Object)node;
         }
-        return new GraphicShape(id);
+        return null;
     }
     
     @Override
@@ -73,9 +77,10 @@ public class ClientSession extends Thread {
         try {
             while(!isInterrupted()) {
                 ligne = inputStream.readLine(); //Data envoyé par le client (par ligne)
-                System.out.println("Recieved data from client ["+noConnexion+"] : "+ligne);
-                
-                chain.interpretXML(ligne, this);
+                if (ligne != null) {
+                    System.out.println("Recieved data from client ["+noConnexion+"] : "+ligne);
+                    chain.interpretXML(ligne, this);
+                }
                 
                 sleep(5);
             }

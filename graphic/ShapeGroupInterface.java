@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaserver;
+package graphic;
 
 import network.ClientSession;
 
@@ -11,9 +11,9 @@ import network.ClientSession;
  *
  * @author Thomas
  */
-public class CircleInterface extends DrawableInterface {
+public class ShapeGroupInterface extends DrawableInterface {
     
-    public CircleInterface(DrawableInterface di) {
+    public ShapeGroupInterface(DrawableInterface di) {
         super(di);
     }
     
@@ -24,6 +24,6 @@ public class CircleInterface extends DrawableInterface {
 
     @Override
     public String getDescription() {
-        return "circle";
+        return "shapegroup";
     }
 }

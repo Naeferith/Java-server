@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaserver;
+package graphic;
 
-import graphic.GraphicShape;
+
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 import network.ClientSession;
 import org.w3c.dom.*;
 
@@ -28,14 +27,18 @@ public class ShapeInterface extends DrawableInterface {
         System.out.println("Ceci est une forme");
         //Structure a dessiner
         String id = DrawableInterface.doc.getDocumentElement().getAttribute("id");
-        GraphicShape polygon = cs.initShape(id);
-        boolean isUpdate = !polygon.getPoints().isEmpty();
+        Object temp = cs.retrieveShape(id);
+        Polygon polygon;
+        boolean isUpdate = temp != null;
+        
+        if (temp != null) polygon = (Polygon) temp;
+        else {
+            polygon = new Polygon();
+            polygon.setId(id);
+        }
         
         //Couleur
-        Color color = new Color( Double.parseDouble(DrawableInterface.doc.getElementsByTagName("r").item(0).getTextContent()), 
-                Double.parseDouble(DrawableInterface.doc.getElementsByTagName("g").item(0).getTextContent()), 
-                Double.parseDouble(DrawableInterface.doc.getElementsByTagName("b").item(0).getTextContent()), 
-                1);
+        Color color = retrieveColor();
         
         polygon.setFill(color);
         polygon.setStroke(color);

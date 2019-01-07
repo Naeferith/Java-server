@@ -25,35 +25,8 @@ public class JavaServer extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
         Group root = new Group();
-        root.getChildren().add(btn);
-        
-        //Creating a Polygon 
-        Polygon polygon = new Polygon();  
-
-        //Adding coordinates to the polygon 
-        polygon.getPoints().addAll(new Double[]{ 
-           300.0, 50.0, 
-           300.0, 250.0,
-           450.0, 150.0,
-           150.0, 150.0, 
-        }); 
-
-        //Creating a Group object  
-        Group root2 = new Group(polygon); 
-        
         Scene scene = new Scene(root, 600, 300);
-        
         Root = root;
         
         primaryStage.setTitle("Hello World!");
