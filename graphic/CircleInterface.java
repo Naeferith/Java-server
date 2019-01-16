@@ -6,6 +6,7 @@
 package graphic;
 
 import javafx.application.Platform;
+import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import network.ClientSession;
 import org.w3c.dom.Node;
@@ -22,35 +23,17 @@ public class CircleInterface extends DrawableInterface {
     
     @Override
     public void executeRequest(ClientSession cs) {
-        System.out.println("Ceci est un circle");
-        //Structure a dessiner
-        String id = DrawableInterface.doc.getDocumentElement().getAttribute("id");
-        Object temp = cs.retrieveShape(id);
-        final Circle circle;
-        boolean isUpdate = temp != null;
-        
-        if (temp != null) circle = (Circle) temp;
-        else {
-            circle = new Circle();
-            circle.setId(id);
-        }
+        final Circle circle = init(cs, Circle.class);
         
         //Center
         final Node center = DrawableInterface.doc.getElementsByTagName("vertices").item(0).getFirstChild();
         circle.setCenterX(Double.parseDouble(center.getFirstChild().getTextContent()));
         circle.setCenterY(Double.parseDouble(center.getLastChild().getTextContent()));
         
-        //Raduis
+        //Radius
         circle.setRadius(Double.parseDouble(DrawableInterface.doc.getElementsByTagName("radius").item(0).getTextContent()));
         
-        //Color
-        circle.setFill(retrieveColor());
-        
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                if (!isUpdate) cs.getGroup().getChildren().add(circle);
-            }
-        });
+        updateCanvas(cs, circle);
     }
 
     @Override

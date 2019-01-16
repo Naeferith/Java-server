@@ -5,7 +5,20 @@
  */
 package graphic;
 
+import static graphic.DrawableInterface.doc;
+import java.io.StringWriter;
+import javafx.scene.Group;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import network.ClientSession;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  *
@@ -19,7 +32,34 @@ public class ShapeGroupInterface extends DrawableInterface {
     
     @Override
     public void executeRequest(ClientSession cs) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final Group group = init(cs, Group.class);
+        Document originalDoc = doc;
+        
+        Node shape = originalDoc.getDocumentElement().getFirstChild();
+        
+        StringWriter sw = null;
+        Transformer t = null;
+        
+        while(shape != null) {
+            if (shape instanceof Element) {
+                sw = new StringWriter();
+
+                try {
+                 t = TransformerFactory.newInstance().newTransformer();
+                 t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+                 t.setOutputProperty(OutputKeys.INDENT, "no");
+                 t.transform(new DOMSource(shape), new StreamResult(sw));
+                 System.out.println(">> " + sw.toString());
+                 interpretXML(sw.toString(), cs, group);
+
+                } catch (TransformerException te) {
+                 System.out.println("nodeToString Transformer Exception");
+                }
+            }
+            shape = shape.getNextSibling();
+        }
+        defaultGroup = cs.getGroup();
+        updateCanvas(cs, group);
     }
 
     @Override

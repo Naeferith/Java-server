@@ -21,35 +21,15 @@ public class ShapeInterface extends DrawableInterface {
     public ShapeInterface(DrawableInterface di) {
         super(di);
     }
-    
     @Override
     public void executeRequest(ClientSession cs) {
-        System.out.println("Ceci est une forme");
-        //Structure a dessiner
-        String id = DrawableInterface.doc.getDocumentElement().getAttribute("id");
-        Object temp = cs.retrieveShape(id);
-        Polygon polygon;
-        boolean isUpdate = temp != null;
-        
-        if (temp != null) polygon = (Polygon) temp;
-        else {
-            polygon = new Polygon();
-            polygon.setId(id);
-        }
-        
-        //Couleur
-        Color color = retrieveColor();
-        
-        polygon.setFill(color);
-        polygon.setStroke(color);
-        if (polygon.getPoints().size() < 3) polygon.setStrokeWidth(1); //Si c'est un segment, on affiche le bord
-        else polygon.setStrokeWidth(0);
+        final Polygon polygon = init(cs, Polygon.class);    
         
         //Points
         final Node verticeNode = DrawableInterface.doc.getElementsByTagName("vertices").item(0);
         final NodeList vertices = verticeNode.getChildNodes();
         
-        //Si des points ont déja été définis, c'est un update -> on reset les points.
+        //Si des points ont déja été définis, on les reset.
         if (!polygon.getPoints().isEmpty()) polygon.getPoints().clear();
         
         for (int i = 0; i<vertices.getLength(); i++) {
@@ -59,12 +39,12 @@ public class ShapeInterface extends DrawableInterface {
                 polygon.getPoints().add(new Double(e.getElementsByTagName("y").item(0).getTextContent()));
             }				
         }
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                if (!isUpdate) cs.getGroup().getChildren().add(polygon);
-            }
-        });
         
+        updateCanvas(cs, polygon);
+        
+        polygon.setStroke(polygon.getFill());
+        if (polygon.getPoints().size() < 3) polygon.setStrokeWidth(1); //Si c'est un segment, on affiche le bord
+        else polygon.setStrokeWidth(0);
     }
 
     @Override

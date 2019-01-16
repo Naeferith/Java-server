@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.shape.Shape;
 import javaserver.*;
 
 
@@ -25,7 +24,7 @@ public class ClientSession extends Thread {
     
     private Group SceneGroup = new Group();
     
-    private DrawableInterface chain = null;
+    private static DrawableInterface chain = null;
     
     private BufferedReader inputStream;
     

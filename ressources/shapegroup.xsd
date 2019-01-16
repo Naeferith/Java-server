@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
 
 <schema xmlns="http://www.w3.org/2001/XMLSchema">
-	<element name="shape">
+    <element name="shapegoup">
     <complexType>
       <sequence>
+        <element name="shapeName" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:simpleType name="shapeName">
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="shape"/>
+              <xs:enumeration value="circle"/>
+              <xs:enumeration value="shapegroup"/>
+            </xs:restriction>
+        </xs:simpleType>
         <element name="color" minOccurs="1" maxOccurs="1"/>
-		<element name="vertices" minOccurs="1" maxOccurs="1"/>
       </sequence>
     </complexType>
   </element>
@@ -16,23 +23,6 @@
         <element name="r" type="nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
         <element name="g" type="nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
 	<element name="b" type="nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
-      </sequence>
-    </complexType>
-  </element>
-  
-  <element name="vertices">
-    <complexType>
-      <sequence>
-        <element name="vertice" minOccurs="1" maxOccurs="unbounded"/>
-      </sequence>
-    </complexType>
-  </element>
-  
-  <element name="vertice">
-    <complexType>
-      <sequence>
-        <element name="x" type="nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
-        <element name="y" type="nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
       </sequence>
     </complexType>
   </element>
