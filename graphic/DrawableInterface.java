@@ -26,9 +26,9 @@ import org.xml.sax.SAXException;
 /**
  * Maillon abstrait de la chaine de responsabilité.
  * <p>
- * Il dispose de membres nécessaires à l'interpretation de l'XML recu.
- * L'XML (String) est tronsformé en DOM XMLDocument pour etre parcourable avec 
- * des methodes DOM founies par le package org.w3c.dom
+ * Il dispose de membres nécessaires à l'interprétation de l'XML reçu.
+ * L'XML (String) est transformé en DOM XMLDocument pour être parcourable avec 
+ * des méthodes DOM fournies par le package org.w3c.dom
  *
  * @author Thomas
  */
@@ -58,9 +58,7 @@ public abstract class DrawableInterface {
      *
      * @return Le maillon suivant s'il existe, null sinon;
      */
-    public DrawableInterface getNext() {
-        return next;
-    }
+    public DrawableInterface getNext() { return next; }
     
     /**
      * Traitement de la requete.
@@ -94,8 +92,6 @@ public abstract class DrawableInterface {
     
     /**
      * Vérifie un XML recu par son schéma XSD correspondant.
-     * <p>
-     * 
      *
      * @param xsdName Nom du document XSD. (le tagName de la racine de l'XML.)
      * @param xml     XML au format String à faire valider.

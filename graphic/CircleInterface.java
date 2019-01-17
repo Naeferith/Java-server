@@ -5,7 +5,7 @@ import network.ClientSession;
 import org.w3c.dom.Node;
 
 /**
- * Maillon de la chaine pour les formes de type Circle
+ * Maillon de la chaine pour les formes de type Circle.
  *
  * @author Thomas
  */

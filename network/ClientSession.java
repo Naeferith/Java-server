@@ -19,7 +19,7 @@ import javaserver.*;
  * <p>
  * Il est défini par le socket de connexion ainsi que l'identifiant de connexion
  * tout deux délivrés par le serveur. Chaque session dispose d'un Group JavaFX
- * qui deviendra la racine des formes insérées. L'identifiat permettant le
+ * qui deviendra la racine des formes insérées. L'identifiant permettant le
  * dispatch dans le bon Group. Son parent direct est le Group root du Serveur.
  *
  * @author Thomas
@@ -114,7 +114,6 @@ public class ClientSession extends Thread {
                     System.out.println("Recieved data from client ["+noConnexion+"] : "+ligne);
                     chain.interpretXML(ligne, this);
                 }
-                
                 sleep(5);
             }
         }
