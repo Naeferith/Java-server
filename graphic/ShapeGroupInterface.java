@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
 import static graphic.DrawableInterface.doc;
 import java.io.StringWriter;
 import javafx.scene.Group;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -21,6 +15,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
+ * Maillon de la chaine pour les formes complexes.
  *
  * @author Thomas
  */
@@ -37,8 +32,8 @@ public class ShapeGroupInterface extends DrawableInterface {
         
         Node shape = originalDoc.getDocumentElement().getFirstChild();
         
-        StringWriter sw = null;
-        Transformer t = null;
+        StringWriter sw;
+        Transformer t;
         
         while(shape != null) {
             if (shape instanceof Element) {

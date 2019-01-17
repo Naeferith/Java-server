@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
-
-import javafx.application.Platform;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import network.ClientSession;
 import org.w3c.dom.*;
 
 /**
+ * Maillon de la chaine pour les formes du type Shape, Segment et Rectangle.
  *
  * @author Thomas
  */
@@ -51,5 +44,4 @@ public class ShapeInterface extends DrawableInterface {
     public String getDescription() {
         return "shape";
     }
-    
 }

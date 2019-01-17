@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javaserver;
 
 import network.Server;
@@ -12,10 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Classe de l'application.
+ * <p>
+ * Elle sert à la création de la fenetre JavaFX et à l'instanciation du serveur.
+ * 
  * @author Thomas
  */
 public class JavaServer extends Application {
+    //Group racine de l'arboresence
     public static volatile Group Root = null;
     
     @Override
@@ -30,6 +29,8 @@ public class JavaServer extends Application {
     }
 
     /**
+     * Fonction main.
+     * 
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception{

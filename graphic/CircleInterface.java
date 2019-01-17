@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
-import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import network.ClientSession;
 import org.w3c.dom.Node;
 
 /**
+ * Maillon de la chaine pour les formes de type Circle
  *
  * @author Thomas
  */
