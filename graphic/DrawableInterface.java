@@ -136,7 +136,7 @@ public abstract class DrawableInterface {
         catch(SAXException saxe) { System.out.println("Erreur : XML corrompu"); }
         catch(IOException ioe) { System.out.println("ioe"); }
         catch(ParserConfigurationException pce) { System.out.println("pce"); }
-        interact(doc.getDocumentElement().getTagName(), cs);
+        //interact(doc.getDocumentElement().getTagName(), cs);
         if (validateXMLSchema(doc.getDocumentElement().getTagName(), ligne)) interact(doc.getDocumentElement().getTagName(), cs);
         else System.out.println("XML recu n'est pas validé par l'XSD correspondant");
     }
