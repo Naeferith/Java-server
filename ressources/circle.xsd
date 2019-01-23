@@ -33,8 +33,8 @@
   <element name="vertice">
     <complexType>
       <sequence>
-        <element name="x" type="nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
-        <element name="y" type="nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+        <element name="x" minOccurs="1" maxOccurs="1"/>
+        <element name="y"  minOccurs="1" maxOccurs="1"/>
       </sequence>
     </complexType>
   </element>
